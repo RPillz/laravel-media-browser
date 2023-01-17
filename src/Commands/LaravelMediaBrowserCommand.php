@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace RPillz\LaravelMediaBrowser\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelMediaBrowserCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-media-browser';
 
     public $description = 'My command';
 
