@@ -1,8 +1,8 @@
 <div>
-        
+
     <form wire:submit.prevent="mediaMultiUpload">
 
-        <x-filepond
+        {{-- <x-filepond
             wire:model="mediaUploads"
             ref="mediafilepond"
             multiple
@@ -13,7 +13,7 @@
             allowRemove="false"
             allowRevert="false"
             maxFiles=5
-        />
+        /> --}}
 
         @error('mediaUploads')
             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
