@@ -19,7 +19,8 @@ class LaravelMediaBrowserServiceProvider extends PackageServiceProvider
             ->name('laravel-media-browser')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel-media-browser_table')
+            ->hasMigrations(['create_media_libraries_table', 'create_media_attachments_table'])
             ->hasCommand(LaravelMediaBrowserCommand::class);
     }
+
 }
