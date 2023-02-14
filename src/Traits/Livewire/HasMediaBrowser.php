@@ -82,6 +82,8 @@ trait HasMediaBrowser
 
         $saved = $upload->store($this->mediaCollectionName, config('media-browser.image-disk'));
 
+        Log::debug('Image Saved To Disk', ['path' => $saved]);
+
         $filename = $upload->getClientOriginalName();
 
         // if (config('tenancy.filesystem.suffix_base'))
@@ -92,7 +94,8 @@ trait HasMediaBrowser
         // dd($saved);
 
         // $newmedia = $this->mediaModel->addMedia($upload->getRealPath())->usingName($filename)->toMediaCollection('media');
-        $this->mediaSelected = $this->mediaModel->addMedia(Storage::disk(config('media-browser.image-disk'))->path($saved))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
+        // $this->mediaSelected = $this->mediaModel->addMedia(Storage::disk(config('media-browser.image-disk'))->path($saved))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
+        $this->mediaSelected = $this->mediaModel->addMediaFromDisk(Storage::disk(config('media-browser.image-disk'))->path($saved), config('media-browser.image-disk'))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
 
         // dd($this->mediaSelected);
 
