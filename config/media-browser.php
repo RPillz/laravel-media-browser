@@ -4,7 +4,6 @@
 return [
 
     'upload-disk' => 'public',
-    'image-disk' => 'public',
-    'file-disk' => 'public',
+    'storage-disk' => 'public',
 
 ];

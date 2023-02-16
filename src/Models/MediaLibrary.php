@@ -18,9 +18,19 @@ class MediaLibrary extends Model implements HasMedia
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected $attributes = [
+        'disk' => null,
+    ];
+
     public function owner()
     {
         return $this->morphTo();
+    }
+
+    public function getDiskAttribute()
+    {
+        if (!is_null($this->attributes['disk'])) return $this->attributes['disk'];
+        return config('media-browser.storage-disk', 'public');
     }
 
     public function registerMediaCollections(): void
@@ -28,7 +38,7 @@ class MediaLibrary extends Model implements HasMedia
 
         $this->addMediaCollection('images')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'])
-            ->useDisk(config('media-browser.image-disk'))
+            ->useDisk($this->disk)
             ->registerMediaConversions(function (Media $media) {
 
                 $this->addMediaConversion('large')
@@ -58,7 +68,7 @@ class MediaLibrary extends Model implements HasMedia
             });
 
         $this->addMediaCollection('files')
-            ->useDisk(config('media-browser.file-disk'));
+            ->useDisk($this->disk);
 
     }
 

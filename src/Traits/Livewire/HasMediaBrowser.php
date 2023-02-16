@@ -80,7 +80,7 @@ trait HasMediaBrowser
 
         ]);
 
-        $saved = $upload->store($this->mediaCollectionName, config('media-browser.image-disk'));
+        $saved = $upload->store($this->mediaCollectionName, $this->mediaModel->disk);
 
         Log::debug('Image Saved To Disk', ['path' => $saved]);
 
@@ -95,7 +95,7 @@ trait HasMediaBrowser
 
         // $newmedia = $this->mediaModel->addMedia($upload->getRealPath())->usingName($filename)->toMediaCollection('media');
         // $this->mediaSelected = $this->mediaModel->addMedia(Storage::disk(config('media-browser.image-disk'))->path($saved))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
-        $this->mediaSelected = $this->mediaModel->addMediaFromDisk(Storage::disk(config('media-browser.image-disk'))->path($saved), config('media-browser.image-disk'))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
+        $this->mediaSelected = $this->mediaModel->addMediaFromDisk(Storage::disk($this->mediaModel->disk)->path($saved), $this->mediaModel->disk)->usingName($filename)->toMediaCollection($this->mediaCollectionName);
 
         // dd($this->mediaSelected);
 
@@ -117,11 +117,11 @@ trait HasMediaBrowser
 
         ]);
 
-        $saved = $upload->store($this->mediaCollectionName, config('media-browser.image-disk'));
+        $saved = $upload->store($this->mediaCollectionName, $this->mediaModel->disk);
 
         $filename = $upload->getClientOriginalName();
 
-        $newMedia = $this->mediaModel->addMedia(Storage::disk(config('media-browser.image-disk'))->path($saved))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
+        $newMedia = $this->mediaModel->addMedia(Storage::disk($this->mediaModel->disk)->path($saved))->usingName($filename)->toMediaCollection($this->mediaCollectionName);
 
         // replace attachments
 

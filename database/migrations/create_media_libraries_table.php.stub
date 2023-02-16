@@ -10,8 +10,12 @@ return new class extends Migration
     {
         Schema::create('media_libraries', function (Blueprint $table) {
             $table->ulid('id')->primary();
+
             $table->string('name')->nullable();
             $table->nullableUuidMorphs('owner');
+
+            $table->string('disk')->nullable();
+
             $table->timestamps();
         });
     }

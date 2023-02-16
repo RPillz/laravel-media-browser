@@ -58,13 +58,13 @@
 
                     <div class="bg-gray-100 rounded p-3">
                         @if($mediaSelected->hasGeneratedConversion('thumbnail'))
-                                <img src="{{ $mediaSelected->getUrl('thumbnail') }}" class="mx-auto max-h-40" alt="{{ $mediaSelected->name }}" />
-                            @else
-                                <div class="text-sm flex flex-col p-5 text-center">
-                                    <span class="font-bold">{{ $mediaSelected->name }}</span>
-                                    <span>[{{ $mediaSelected->mime_type }}]</span>
-                                </div>
-                            @endif
+                            <img src="{{ $mediaSelected->getUrl('thumbnail') }}" class="mx-auto max-h-40" alt="{{ $mediaSelected->name }}" />
+                        @else
+                            <div class="text-sm flex flex-col p-5 text-center">
+                                <span class="font-bold">{{ $mediaSelected->name }}</span>
+                                <span>[{{ $mediaSelected->mime_type }}]</span>
+                            </div>
+                        @endif
                     </div>
 
                     <p class="text-center text-sm my-2">{{ $mediaSelected->name }}</p>
