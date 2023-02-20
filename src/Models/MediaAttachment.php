@@ -3,6 +3,7 @@
 namespace RPillz\LaravelMediaBrowser\Models;
 
 use Spatie\EloquentSortable\Sortable;
+use Symfony\Component\Mime\MimeTypes;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -30,6 +31,11 @@ class MediaAttachment extends Model implements Sortable
     public function media()
     {
         return $this->belongsTo(Media::class);
+    }
+
+    public function getExtenstionAttribute()
+    {
+        return MimeTypes::getDefault()->getExtensions($this->media->mime_type)[0];
     }
 
     public function buildSortQuery()

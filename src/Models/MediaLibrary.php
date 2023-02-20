@@ -68,8 +68,12 @@ class MediaLibrary extends Model implements HasMedia
             });
 
         $this->addMediaCollection('files')
-            ->useDisk($this->disk);
-
+            ->useDisk($this->disk)
+            ->registerMediaConversions(function (Media $media) {
+                $this->addMediaConversion('thumbnail')
+                    ->keepOriginalImageFormat()
+                    ->fit(Manipulations::FIT_CROP, 200, 200);
+            });
     }
 
 }

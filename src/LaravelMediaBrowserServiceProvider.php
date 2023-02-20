@@ -2,9 +2,11 @@
 
 namespace RPillz\LaravelMediaBrowser;
 
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use RPillz\LaravelMediaBrowser\Commands\LaravelMediaBrowserCommand;
+use RPillz\LaravelMediaBrowser\Livewire\MediaPicker;
 
 class LaravelMediaBrowserServiceProvider extends PackageServiceProvider
 {
@@ -21,6 +23,11 @@ class LaravelMediaBrowserServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigrations(['create_media_libraries_table', 'create_media_attachments_table'])
             ->hasCommand(LaravelMediaBrowserCommand::class);
+    }
+
+    public function bootingPackage(): void
+    {
+        Livewire::component('media-picker', MediaPicker::class);
     }
 
 }

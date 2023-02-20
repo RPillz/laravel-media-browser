@@ -22,7 +22,7 @@ trait HasMediaAttachments
     }
 
     public function getAttachments($type='primary'){
-        if ($attachments = $this->attachments->where('type', $type)->all()){
+        if ($attachments = $this->attachments()->where('type', $type)->get()){
             return $attachments;
         } else {
             return [];
@@ -38,7 +38,7 @@ trait HasMediaAttachments
     }
 
     public function getAttachmentGallery($type='gallery'){
-        if ($attachment = $this->attachments->where('type', $type)->all()){
+        if ($attachment = $this->attachments()->where('type', $type)->get()){
             return $attachment;
         } else {
             return false;
@@ -107,7 +107,7 @@ trait HasMediaAttachments
     }
 
     // shortcut for the primary image url
-    public function imageUrl($size = 'full', bool $random = false){
+    public function imageUrl($size = 'medium', bool $random = false){
 
         if($attached = $this->getAttachmentUrl('primary', $size)){
             return $attached;
