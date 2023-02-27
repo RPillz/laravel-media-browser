@@ -107,9 +107,9 @@ trait HasMediaAttachments
     }
 
     // shortcut for the primary image url
-    public function imageUrl($size = 'medium', bool $random = false){
+    public function imageUrl($size = 'medium', $type = 'primary', bool $random = false){
 
-        if($attached = $this->getAttachmentUrl('primary', $size)){
+        if($attached = $this->getAttachmentUrl($type, $size)){
             return $attached;
         } else
         if ($random) {

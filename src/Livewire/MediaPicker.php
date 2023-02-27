@@ -26,6 +26,7 @@ class MediaPicker extends Component
 
     public $mediaAttachments;
     public $mediaUploads;
+    public $uploadedMedia;
 
     public $mediaCollection = null;
     public $mediaCollectionName = 'images';
@@ -41,7 +42,7 @@ class MediaPicker extends Component
     public $mediaLibrary;
 
     public $mediaPage = 1;
-    public $mediaPerPage = 3;
+    public $mediaPerPage = 15;
 
     protected $rules = [
         'mediaUploads' => '',
@@ -68,6 +69,8 @@ class MediaPicker extends Component
     public function attachMedia($uuid){
 
         $media = $this->mediaCollection->firstWhere('uuid', $uuid);
+
+        Log::debug('Media Attach', ['media' => $media] );
 
         if(!$media) return false;
 
@@ -149,9 +152,13 @@ class MediaPicker extends Component
 
         $filename = $upload->getClientOriginalName();
 
-        $media = $this->mediaLibrary->addMediaFromDisk(Storage::disk($this->mediaLibrary->disk)->path($saved), $this->mediaLibrary->disk)->usingName($filename)->toMediaCollection($this->mediaCollectionName);
+        $this->uploadedMedia = $this->mediaLibrary->addMediaFromDisk(Storage::disk($this->mediaLibrary->disk)->path($saved), $this->mediaLibrary->disk)->usingName($filename)->toMediaCollection($this->mediaCollectionName);
 
-        $this->refreshMediaCollection();
+        // $this->refreshMediaCollection();
+
+        Log::debug('Media Saved To Library', ['media' => $this->uploadedMedia]);
+
+        if ($this->uploadedMedia) $this->attachMedia($this->uploadedMedia->uuid);
 
         return true;
 
