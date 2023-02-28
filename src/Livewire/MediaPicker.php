@@ -143,7 +143,7 @@ class MediaPicker extends Component
         if (is_null($upload)) return false;
 
         $this->validate([
-            'mediaUploads.*' => 'image|max:1024', // 1MB Max
+            'mediaUploads.*' => 'file|max:1073741824', // 1GB Max
         ]);
 
         $saved = $upload->store($this->mediaCollectionName, $this->mediaLibrary->disk);
