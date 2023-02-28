@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use RPillz\LaravelMediaBrowser\Models\MediaLibrary;
 use RPillz\LaravelVideoLibrary\Models\VideoLibrary;
 use RPillz\LaravelMediaBrowser\Models\MediaAttachment;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaPicker extends Component
 {
@@ -68,9 +69,11 @@ class MediaPicker extends Component
 
     public function attachMedia($uuid){
 
-        $media = $this->mediaCollection->firstWhere('uuid', $uuid);
+        // $media = $this->mediaCollection->firstWhere('uuid', $uuid);
+        // $media = $this->mediaLibrary->getMedia($this->mediaCollectionName)->where('uuid', $uuid)->first();
+        $media = Media::where('uuid', $uuid)->first();
 
-        Log::debug('Media Attach', ['media' => $media] );
+        Log::debug('Media Attach', ['uuid' => $uuid, 'collection' => $this->mediaCollectionName, 'media' => $media] );
 
         if(!$media) return false;
 
@@ -143,7 +146,7 @@ class MediaPicker extends Component
         if (is_null($upload)) return false;
 
         $this->validate([
-            'mediaUploads.*' => 'file|max:1073741824', // 1GB Max
+            'mediaUploads.*' => 'file', // 1GB Max
         ]);
 
         $saved = $upload->store($this->mediaCollectionName, $this->mediaLibrary->disk);
@@ -154,7 +157,7 @@ class MediaPicker extends Component
 
         $this->uploadedMedia = $this->mediaLibrary->addMediaFromDisk(Storage::disk($this->mediaLibrary->disk)->path($saved), $this->mediaLibrary->disk)->usingName($filename)->toMediaCollection($this->mediaCollectionName);
 
-        // $this->refreshMediaCollection();
+        $this->refreshMediaCollection();
 
         Log::debug('Media Saved To Library', ['media' => $this->uploadedMedia]);
 
